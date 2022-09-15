@@ -17,7 +17,7 @@ h1 {
 	text-shadow: 1px 1px 2px black;
 }
 
-.vertical_center {
+.vertical-center {
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -25,7 +25,7 @@ h1 {
 	align-items: center;
 }
 
-form * {
+#guess-form * {
 	padding: 10px;
 	margin: 20px 4px;
 	border: none;
@@ -35,19 +35,43 @@ form * {
 	box-shadow: 0 0 15px 4px #00000025;
 }
 
-form button {
+#guess-form button {
 	background-color: #29b2a0;
 	color: #fff;
 	font-weight: 600;
 }
 
-form button:active {
+#guess-form button:active {
 	transform: scale(0.98);
 	/* Scaling button to 0.98 to its original size */
 	box-shadow: 0 0 10px 4px #00000025;
 	/* Lowering the shadow */
 }
 
+.hidden {
+	visibility: hidden;
+}
+
+.notify-good {
+	background-color: #29b2a0;
+}
+
+.notify-bad {
+	background-color: rgb(218, 75, 0);
+}
+
+#notify {
+	padding: 10px;
+	margin: 20px 4px;
+	border-radius: 10px;
+	box-shadow: 0 0 15px 4px #00000025;
+	color: #fff;
+}
+
+#notify span {
+	font-weight: bold;
+	text-decoration: underline;
+}
 table {
 	width: 80vw;
 	height: 80vw;
