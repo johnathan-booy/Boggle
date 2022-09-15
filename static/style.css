@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Roboto+Slab&display=swap");
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Robot Slab", sans-serif;
+}
+
+body {
+	background-color: #fcfa96;
+}
+
+h1 {
+	font-family: "Bungee Spice", cursive;
+	font-size: 4rem;
+	text-shadow: 1px 1px 2px black;
+}
+
+.vertical_center {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+form * {
+	padding: 10px;
+	margin: 20px 4px;
+	border: none;
+	border-radius: 10px;
+	font-family: inherit;
+	font-size: inherit;
+	box-shadow: 0 0 15px 4px #00000025;
+}
+
+form button {
+	background-color: #29b2a0;
+	color: #fff;
+	font-weight: 600;
+}
+
+form button:active {
+	transform: scale(0.98);
+	/* Scaling button to 0.98 to its original size */
+	box-shadow: 0 0 10px 4px #00000025;
+	/* Lowering the shadow */
+}
+
+table {
+	width: 80vw;
+	height: 80vw;
+	max-width: 500px;
+	max-height: 500px;
+	border-collapse: separate;
+	border-spacing: 6px;
+	table-layout: fixed;
+}
+
+td {
+	font-size: 3rem;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.5);
+}

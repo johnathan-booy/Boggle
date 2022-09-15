@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Boggle</title>
+{% endblock %}
+
+{% block content %}
+<div class="vertical_center">
+    <h1>Boggle</h1>
+    <form action="/" method="get">
+        <input type="text" name="guess" id="guess" placeholder="Guess a word!">
+        <button>Guess!</button>
+    </form>
+    {% if board %}
+    <table>
+        {% for row in board %}
+        <tr>
+            {% for letter in row %}
+            <td>{{letter}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif%}
+</div>
+{% endblock %}
