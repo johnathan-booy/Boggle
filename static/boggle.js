@@ -1,6 +1,7 @@
 class BoggleGame {
 	constructor(boardId) {
 		this.score = 0;
+		this.guessedWords = new Set();
 		$("#guess-form").on("submit", this.handleSubmit.bind(this));
 	}
 
@@ -25,10 +26,9 @@ class BoggleGame {
 		const wordCased = word.toUpperCase();
 
 		$notify.removeClass();
-		if (validation.result === "ok") {
-			$notify.addClass("notify-good");
-			$notify.html(`You found the word '<span>${wordCased}</span>'!`);
-			this.updateScore(word.length);
+		if (this.guessedWords.has(wordCased)) {
+			$notify.addClass("notify-bad");
+			$notify.html(`You've already guessed '${wordCased}'!`);
 		} else if (word.length < 2) {
 			$notify.addClass("notify-bad");
 			$notify.html(`Words must be at least two characters long!`);
@@ -38,8 +38,11 @@ class BoggleGame {
 		} else if (validation.result === "not-word") {
 			$notify.addClass("notify-bad");
 			$notify.html(`'<span>${wordCased}</span>' is not a word!`);
-		} else {
-			$notify.addClass("hidden");
+		} else if (validation.result === "ok") {
+			$notify.addClass("notify-good");
+			$notify.html(`You found the word '<span>${wordCased}</span>'!`);
+			this.updateScore(word.length);
+			this.guessedWords.add(wordCased);
 		}
 	}
 
