@@ -25,12 +25,13 @@ class BoggleGame {
 		const wordCased = word.toUpperCase();
 
 		$notify.removeClass();
-		if (word.length < 2) {
-			$notify.addClass("notify-bad");
-			$notify.html(`Words must be at least two characters long!`);
-		} else if (validation.result === "ok") {
+		if (validation.result === "ok") {
 			$notify.addClass("notify-good");
 			$notify.html(`You found the word '<span>${wordCased}</span>'!`);
+			this.updateScore(word.length);
+		} else if (word.length < 2) {
+			$notify.addClass("notify-bad");
+			$notify.html(`Words must be at least two characters long!`);
 		} else if (validation.result === "not-on-board") {
 			$notify.addClass("notify-bad");
 			$notify.html(`'<span>${wordCased}</span>' is not on the board!`);
@@ -40,5 +41,15 @@ class BoggleGame {
 		} else {
 			$notify.addClass("hidden");
 		}
+	}
+
+	updateScore(num) {
+		this.score = this.score + num;
+		this.displayScore();
+	}
+
+	displayScore() {
+		$("#score").removeClass("hidden");
+		$("#score span").text(this.score);
 	}
 }

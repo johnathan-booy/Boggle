@@ -9,13 +9,25 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/static/style.css">
 
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7411db11d8.js" crossorigin="anonymous"></script>
+
+
     <title>Boggle</title>
 </head>
 
 <body>
     <div class="vertical-center">
         <div id="statistics">
-            <div id="score"></div>
+            <div id="score" class="hidden statistic">
+                <div class="statistic-label">
+                    Score
+                </div>
+                <div class="statistic-content">
+                    <span></span>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
         </div>
         <h1>Boggle</h1>
         <form id="guess-form" method="post">
