@@ -14,6 +14,9 @@
 
 <body>
     <div class="vertical-center">
+        <div id="statistics">
+            <div id="score"></div>
+        </div>
         <h1>Boggle</h1>
         <form id="guess-form" method="post">
             <input type="text" name="guess-input" id="guess-input" placeholder="Guess a word!">
@@ -39,6 +42,7 @@
     <script src="/static/boggle.js"></script>
     <script>
         let game = new BoggleGame();
+        $('#guess-input').focus()
     </script>
 </body>
 

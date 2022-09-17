@@ -1,5 +1,6 @@
 class BoggleGame {
 	constructor(boardId) {
+		this.score = 0;
 		$("#guess-form").on("submit", this.handleSubmit.bind(this));
 	}
 
@@ -24,8 +25,10 @@ class BoggleGame {
 		const wordCased = word.toUpperCase();
 
 		$notify.removeClass();
-
-		if (validation.result === "ok") {
+		if (word.length < 2) {
+			$notify.addClass("notify-bad");
+			$notify.html(`Words must be at least two characters long!`);
+		} else if (validation.result === "ok") {
 			$notify.addClass("notify-good");
 			$notify.html(`You found the word '<span>${wordCased}</span>'!`);
 		} else if (validation.result === "not-on-board") {

@@ -1,14 +1,45 @@
 """Utilities related to Boggle game."""
 
-from random import choice
+from numpy.random import choice
 import string
 
 
 class Boggle():
 
-    def __init__(self):
+    def __init__(self, size):
 
         self.words = self.read_dict("words.txt")
+        self.size = size
+
+        # Letters matched with their recurence in the english language
+        self.letter_weights = {
+            "A": 0.084966,
+            "B": 0.020720,
+            "C": 0.045388,
+            "D": 0.033844,
+            "E": 0.0111607,
+            "F": 0.018121,
+            "G": 0.024705,
+            "H": 0.030034,
+            "I": 0.075448,
+            "J": 0.001965,
+            "K": 0.011016,
+            "L": 0.054893,
+            "M": 0.030129,
+            "N": 0.066544,
+            "O": 0.071635,
+            "P": 0.031671,
+            "Q": 0.001962,
+            "R": 0.075809,
+            "S": 0.057351,
+            "T": 0.069509,
+            "U": 0.036308,
+            "V": 0.010074,
+            "W": 0.012899,
+            "X": 0.002902,
+            "Y": 0.017779,
+            "Z": 0.002722
+        }
 
     def read_dict(self, dict_path):
         """Read and return all words in dictionary."""
@@ -23,8 +54,15 @@ class Boggle():
 
         board = []
 
-        for y in range(5):
-            row = [choice(string.ascii_uppercase) for i in range(5)]
+        letters = list(self.letter_weights.keys())
+        probs = list(self.letter_weights.values())
+
+        # probs must sum to 1
+        adjusted_probs = [prob + ((1-sum(probs)) / len(letters))
+                          for prob in probs]
+
+        for y in range(self.size):
+            row = [choice(letters, p=adjusted_probs) for i in range(self.size)]
             board.append(row)
 
         return board
@@ -47,7 +85,7 @@ class Boggle():
     def find_from(self, board, word, y, x, seen):
         """Can we find a word on board, starting at x, y?"""
 
-        if x > 4 or y > 4:
+        if x >= self.size or y >= self.size:
             return
 
         # This is called recursively to find smaller and smaller words
@@ -134,8 +172,8 @@ class Boggle():
         # Find starting letter --- try every spot on board and,
         # win fast, should we find the word at that place.
 
-        for y in range(0, 5):
-            for x in range(0, 5):
+        for y in range(0, self.size):
+            for x in range(0, self.size):
                 if self.find_from(board, word, y, x, seen=set()):
                     return True
 
