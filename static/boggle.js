@@ -1,8 +1,18 @@
 class BoggleGame {
 	constructor(boardId) {
+		this.$timer = $("#timer");
+		this.$scoreText = $("#score .statistic-content span");
+		this.$timerText = $("#timer .statistic-content span");
+		this.$guessForm = $("#guess-form");
+		this.$board = $("#board");
+		this.$notify = $("#notify");
+
 		this.score = 0;
 		this.guessedWords = new Set();
-		$("#guess-form").on("submit", this.handleSubmit.bind(this));
+		this.timer = 60;
+
+		this.timerInterval = setInterval(this.updateTimer.bind(this), 1000);
+		this.$guessForm.on("submit", this.handleSubmit.bind(this));
 	}
 
 	async handleSubmit(e) {
@@ -22,25 +32,24 @@ class BoggleGame {
 	}
 
 	displayValidation(validation, word) {
-		const $notify = $("#notify");
 		const wordCased = word.toUpperCase();
 
-		$notify.removeClass();
+		this.$notify.removeClass();
 		if (this.guessedWords.has(wordCased)) {
-			$notify.addClass("notify-bad");
-			$notify.html(`You've already guessed '${wordCased}'!`);
+			this.$notify.addClass("notify-bad");
+			this.$notify.html(`You've already guessed '${wordCased}'!`);
 		} else if (word.length < 2) {
-			$notify.addClass("notify-bad");
-			$notify.html(`Words must be at least two characters long!`);
+			this.$notify.addClass("notify-bad");
+			this.$notify.html(`Words must be at least two characters long!`);
 		} else if (validation.result === "not-on-board") {
-			$notify.addClass("notify-bad");
-			$notify.html(`'<span>${wordCased}</span>' is not on the board!`);
+			this.$notify.addClass("notify-bad");
+			this.$notify.html(`'<span>${wordCased}</span>' is not on the board!`);
 		} else if (validation.result === "not-word") {
-			$notify.addClass("notify-bad");
-			$notify.html(`'<span>${wordCased}</span>' is not a word!`);
+			this.$notify.addClass("notify-bad");
+			this.$notify.html(`'<span>${wordCased}</span>' is not a word!`);
 		} else if (validation.result === "ok") {
-			$notify.addClass("notify-good");
-			$notify.html(`You found the word '<span>${wordCased}</span>'!`);
+			this.$notify.addClass("notify-good");
+			this.$notify.html(`You found the word '<span>${wordCased}</span>'!`);
 			this.updateScore(word.length);
 			this.guessedWords.add(wordCased);
 		}
@@ -48,11 +57,28 @@ class BoggleGame {
 
 	updateScore(num) {
 		this.score = this.score + num;
-		this.displayScore();
+		this.$scoreText.text(this.score);
 	}
 
-	displayScore() {
-		$("#score").removeClass("hidden");
-		$("#score span").text(this.score);
+	updateTimer() {
+		this.timer--;
+		if (this.timer <= 0) {
+			this.gameOver();
+		}
+		this.$timerText.text(this.timer);
+	}
+
+	gameOver() {
+		clearInterval(this.timerInterval);
+		this.$timer.remove();
+		this.$guessForm.remove();
+		this.$board.remove();
+		this.displayResult();
+	}
+
+	displayResult() {
+		this.$notify.removeClass();
+		this.$notify.addClass("notify-good");
+		this.$notify.html(`<b>Game Over!</b>`);
 	}
 }

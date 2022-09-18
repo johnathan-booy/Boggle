@@ -81,13 +81,13 @@ h1 {
 	color: gold;
 }
 
-#score span {
+.statistic span {
 	font-size: 1.5rem;
 	color: black;
 }
 
 #notify,
-#score {
+.statistic {
 	padding: 10px;
 	margin: 20px 4px;
 	border-radius: 10px;
@@ -103,7 +103,7 @@ h1 {
 	text-decoration: underline;
 }
 
-table {
+#board {
 	width: 80vw;
 	height: 80vw;
 	max-width: 500px;
@@ -113,7 +113,7 @@ table {
 	table-layout: fixed;
 }
 
-td {
+#board td {
 	font-size: 3rem;
 	text-align: center;
 	background-color: rgba(255, 255, 255, 0.5);

@@ -19,12 +19,20 @@
 <body>
     <div class="vertical-center">
         <div id="statistics">
-            <div id="score" class="hidden statistic">
+            <div id="timer" class="statistic">
+                <div class="statistic-label">
+                    Timer
+                </div>
+                <div class="statistic-content">
+                    <span>60</span>
+                </div>
+            </div>
+            <div id="score" class="statistic">
                 <div class="statistic-label">
                     Score
                 </div>
                 <div class="statistic-content">
-                    <span></span>
+                    <span>0</span>
                     <i class="fa-solid fa-star"></i>
                 </div>
             </div>
@@ -34,8 +42,7 @@
             <input type="text" name="guess-input" id="guess-input" placeholder="Guess a word!">
             <button type="submit">Guess!</button>
         </form>
-        {% if board %}
-        <table>
+        <table id="board">
             {% for row in board %}
             <tr>
                 {% for letter in row %}
@@ -44,7 +51,6 @@
             </tr>
             {% endfor %}
         </table>
-        {% endif%}
         <div id="notify" class="hidden"></div>
     </div>
 
