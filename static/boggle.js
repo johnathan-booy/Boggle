@@ -10,7 +10,7 @@ class BoggleGame {
 
 		this.score = 0;
 		this.guessedWords = new Set();
-		this.timer = 10;
+		this.timer = 60;
 
 		this.timerInterval = setInterval(this.updateTimer.bind(this), 1000);
 		this.$guessForm.on("submit", this.handleSubmit.bind(this));
@@ -37,20 +37,27 @@ class BoggleGame {
 
 		this.$notify.removeClass();
 		if (this.guessedWords.has(wordCased)) {
-			this.$notify.addClass("notify-bad");
-			this.$notify.html(`You've already guessed '${wordCased}'!`);
+			this.showMessage(`You've already guessed '${wordCased}'!`, "notify-bad");
 		} else if (word.length < 2) {
-			this.$notify.addClass("notify-bad");
-			this.$notify.html(`Words must be at least two characters long!`);
+			this.showMessage(
+				`Words must be at least two characters long!`,
+				"notify-bad"
+			);
 		} else if (validation.result === "not-on-board") {
-			this.$notify.addClass("notify-bad");
-			this.$notify.html(`'<span>${wordCased}</span>' is not on the board!`);
+			this.showMessage(
+				`'<span>${wordCased}</span>' is not on the board!`,
+				"notify-bad"
+			);
 		} else if (validation.result === "not-word") {
-			this.$notify.addClass("notify-bad");
-			this.$notify.html(`'<span>${wordCased}</span>' is not a word!`);
+			this.showMessage(
+				`'<span>${wordCased}</span>' is not a word!`,
+				"notify-bad"
+			);
 		} else if (validation.result === "ok") {
-			this.$notify.addClass("notify-good");
-			this.$notify.html(`You found the word '<span>${wordCased}</span>'!`);
+			this.showMessage(
+				`You found the word '<span>${wordCased}</span>'!`,
+				"notify-good"
+			);
 			this.updateScore(word.length);
 			this.guessedWords.add(wordCased);
 		}
@@ -87,14 +94,28 @@ class BoggleGame {
 
 	async processResult() {
 		const res = await axios.post("/post-score", { score: this.score });
-		console.log(res.data);
 		this.displayResult(res.data);
 	}
 
 	displayResult(results) {
-		this.updateHighscore(results["highscore"]);
+		const { score, highscore, brokeRecord } = results;
+
+		console.log(highscore);
+		this.updateHighscore(highscore);
+
+		if (brokeRecord) {
+			this.showMessage(
+				"<b>Congratulations, you got a new highscore!</b>",
+				"notify-good"
+			);
+		} else {
+			this.showMessage("<b>Nice Work!</b>", "notify-good");
+		}
+	}
+
+	showMessage(html, cls) {
 		this.$notify.removeClass();
-		this.$notify.addClass("notify-good");
-		this.$notify.html(`<b>Game Over!</b>`);
+		this.$notify.addClass(cls);
+		this.$notify.html(html);
 	}
 }
