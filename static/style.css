@@ -35,13 +35,27 @@ h1 {
 	box-shadow: 0 0 15px 4px #00000025;
 }
 
+#new-game {
+	text-decoration: none;
+	padding: 10px 20px;
+	margin: 20px 4px;
+	border: none;
+	border-radius: 10px;
+	font-size: 1.5rem;
+	box-shadow: 0 0 15px 4px #00000025;
+	background-color: rgb(218, 120, 0);
+	color: #fff;
+	font-weight: 600;
+}
+
 #guess-form button {
 	background-color: #29b2a0;
 	color: #fff;
 	font-weight: 600;
 }
 
-#guess-form button:active {
+#guess-form button:active,
+#new-game:active {
 	transform: scale(0.98);
 	/* Scaling button to 0.98 to its original size */
 	box-shadow: 0 0 10px 4px #00000025;
@@ -50,6 +64,7 @@ h1 {
 
 .hidden {
 	visibility: hidden;
+	display: none;
 }
 
 .notify-good {
@@ -57,12 +72,12 @@ h1 {
 }
 
 .notify-bad {
-	background-color: rgb(218, 75, 0);
+	background-color: rgba(218, 76, 0);
 }
 
 #statistics {
 	width: 80vw;
-	max-width: 500px;
+	max-width: 600px;
 	border-radius: 10px;
 	display: flex;
 	align-items: center;
@@ -96,6 +111,9 @@ h1 {
 }
 
 #notify {
+	text-align: center;
+	width: 80vw;
+	max-width: 600px;
 	color: #fff;
 }
 
@@ -107,8 +125,8 @@ h1 {
 #board {
 	width: 80vw;
 	height: 80vw;
-	max-width: 500px;
-	max-height: 500px;
+	max-width: 600px;
+	max-height: 600px;
 	border-collapse: separate;
 	border-spacing: 6px;
 	table-layout: fixed;

@@ -1,5 +1,6 @@
 class BoggleGame {
 	constructor(boardId) {
+		this.$newGame = $("#new-game");
 		this.$timer = $("#timer");
 		this.$scoreText = $("#score .statistic-content span");
 		this.$highscoreText = $("#highscore .statistic-content span");
@@ -10,7 +11,7 @@ class BoggleGame {
 
 		this.score = 0;
 		this.guessedWords = new Set();
-		this.timer = 60;
+		this.timer = 8;
 
 		this.timerInterval = setInterval(this.updateTimer.bind(this), 1000);
 		this.$guessForm.on("submit", this.handleSubmit.bind(this));
@@ -84,6 +85,7 @@ class BoggleGame {
 		clearInterval(this.timerInterval);
 		this.removeBoard();
 		this.processResult();
+		this.$newGame.removeClass("hidden");
 	}
 
 	removeBoard() {
@@ -105,11 +107,11 @@ class BoggleGame {
 
 		if (brokeRecord) {
 			this.showMessage(
-				"<b>Congratulations, you got a new highscore!</b>",
+				"Congratulations, you got a new highscore!",
 				"notify-good"
 			);
 		} else {
-			this.showMessage("<b>Nice Work!</b>", "notify-good");
+			this.showMessage("Nice Work!", "notify-good");
 		}
 	}
 
