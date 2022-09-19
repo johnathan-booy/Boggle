@@ -6,10 +6,10 @@ import string
 
 class Boggle():
 
-    def __init__(self, size):
+    def __init__(self):
 
         self.words = self.read_dict("words.txt")
-        self.size = size
+        self.size = 5
 
         # Letters matched with their recurence in the english language
         self.letter_probs = {
@@ -49,9 +49,10 @@ class Boggle():
         dict_file.close()
         return words
 
-    def make_board(self):
+    def make_board(self, size=5):
         """Make and return a random boggle board."""
 
+        self.size = size
         board = []
 
         letters = list(self.letter_probs.keys())
