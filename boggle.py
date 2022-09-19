@@ -12,7 +12,7 @@ class Boggle():
         self.size = size
 
         # Letters matched with their recurence in the english language
-        self.letter_weights = {
+        self.letter_probs = {
             "A": 0.084966,
             "B": 0.020720,
             "C": 0.045388,
@@ -54,8 +54,8 @@ class Boggle():
 
         board = []
 
-        letters = list(self.letter_weights.keys())
-        probs = list(self.letter_weights.values())
+        letters = list(self.letter_probs.keys())
+        probs = list(self.letter_probs.values())
 
         # probs must sum to 1
         adjusted_probs = [prob + ((1-sum(probs)) / len(letters))
@@ -134,7 +134,7 @@ class Boggle():
             if self.find_from(board, word[1:], y - 1, x, seen):
                 return True
 
-        if y < 4:
+        if y < self.size - 1:
             if self.find_from(board, word[1:], y + 1, x, seen):
                 return True
 
@@ -142,7 +142,7 @@ class Boggle():
             if self.find_from(board, word[1:], y, x - 1, seen):
                 return True
 
-        if x < 4:
+        if x < self.size - 1:
             if self.find_from(board, word[1:], y, x + 1, seen):
                 return True
 
@@ -151,15 +151,15 @@ class Boggle():
             if self.find_from(board, word[1:], y - 1, x - 1, seen):
                 return True
 
-        if y < 4 and x < 4:
+        if y < self.size - 1 and x < self.size - 1:
             if self.find_from(board, word[1:], y + 1, x + 1, seen):
                 return True
 
-        if x > 0 and y < 4:
+        if x > 0 and y < self.size - 1:
             if self.find_from(board, word[1:], y + 1, x - 1, seen):
                 return True
 
-        if x < 4 and y > 0:
+        if x < self.size - 1 and y > 0:
             if self.find_from(board, word[1:], y - 1, x + 1, seen):
                 return True
         # Couldn't find the next letter, so this path is dead

@@ -36,6 +36,23 @@
                     <i class="fa-solid fa-star"></i>
                 </div>
             </div>
+            <div id="highscore" class="statistic">
+                <div class="statistic-label">
+                    Highscore
+                </div>
+                <div class="statistic-content">
+                    <span>{{session.get('highscore', 0)}}</span>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
+            <div id="game-counter" class="statistic">
+                <div class="statistic-label">
+                    Game
+                </div>
+                <div class="statistic-content">
+                    <span>{{session.get('game_count', 1)}}</span>
+                </div>
+            </div>
         </div>
         <h1>Boggle</h1>
         <form id="guess-form" method="post">

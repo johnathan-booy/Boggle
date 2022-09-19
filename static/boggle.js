@@ -2,6 +2,7 @@ class BoggleGame {
 	constructor(boardId) {
 		this.$timer = $("#timer");
 		this.$scoreText = $("#score .statistic-content span");
+		this.$highscoreText = $("#highscore .statistic-content span");
 		this.$timerText = $("#timer .statistic-content span");
 		this.$guessForm = $("#guess-form");
 		this.$board = $("#board");
@@ -9,7 +10,7 @@ class BoggleGame {
 
 		this.score = 0;
 		this.guessedWords = new Set();
-		this.timer = 60;
+		this.timer = 10;
 
 		this.timerInterval = setInterval(this.updateTimer.bind(this), 1000);
 		this.$guessForm.on("submit", this.handleSubmit.bind(this));
@@ -60,6 +61,10 @@ class BoggleGame {
 		this.$scoreText.text(this.score);
 	}
 
+	updateHighscore(num) {
+		this.$highscoreText.text(num);
+	}
+
 	updateTimer() {
 		this.timer--;
 		if (this.timer <= 0) {
@@ -70,13 +75,24 @@ class BoggleGame {
 
 	gameOver() {
 		clearInterval(this.timerInterval);
+		this.removeBoard();
+		this.processResult();
+	}
+
+	removeBoard() {
 		this.$timer.remove();
 		this.$guessForm.remove();
 		this.$board.remove();
-		this.displayResult();
 	}
 
-	displayResult() {
+	async processResult() {
+		const res = await axios.post("/post-score", { score: this.score });
+		console.log(res.data);
+		this.displayResult(res.data);
+	}
+
+	displayResult(results) {
+		this.updateHighscore(results["highscore"]);
 		this.$notify.removeClass();
 		this.$notify.addClass("notify-good");
 		this.$notify.html(`<b>Game Over!</b>`);
