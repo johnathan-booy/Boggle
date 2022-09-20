@@ -25,7 +25,9 @@ h1 {
 	align-items: center;
 }
 
-form * {
+form button,
+form label,
+form input {
 	padding: 10px;
 	margin: 20px 4px;
 	border: none;
@@ -33,19 +35,6 @@ form * {
 	font-family: inherit;
 	font-size: inherit;
 	box-shadow: 0 0 15px 4px #00000025;
-}
-
-#new-game {
-	text-decoration: none;
-	padding: 10px 20px;
-	margin: 20px 4px;
-	border: none;
-	border-radius: 10px;
-	font-size: 1.5rem;
-	box-shadow: 0 0 15px 4px #00000025;
-	background-color: rgb(218, 120, 0);
-	color: #fff;
-	font-weight: 600;
 }
 
 #guess-form button,
@@ -56,11 +45,15 @@ form * {
 }
 
 #guess-form button:active,
-#new-game:active {
+#start-form button:active {
 	transform: scale(0.98);
 	/* Scaling button to 0.98 to its original size */
 	box-shadow: 0 0 10px 4px #00000025;
 	/* Lowering the shadow */
+}
+
+#start-form label {
+	background-color: rgba(198, 198, 198, 0.654);
 }
 
 .hidden {

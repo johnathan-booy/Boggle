@@ -2,7 +2,7 @@ from unittest import TestCase
 from app import app
 from flask import session
 from boggle import Boggle
-from app import BOARD_KEY
+from app import BOARD_KEY, boggle_game
 
 
 class FlaskTests(TestCase):
@@ -16,7 +16,7 @@ class FlaskTests(TestCase):
         """Make sure information is in the session and the HTML is displayed"""
 
         with self.client:
-            response = self.client.get('/game')
+            response = self.client.get('/game?size=5')
             self.assertIn(BOARD_KEY, session)
             self.assertIsNone(session.get('highscore'))
             self.assertIsNone(session.get('game-count'))
@@ -35,6 +35,7 @@ class FlaskTests(TestCase):
                                              ['D', 'I', 'T', 'T', 'U'],
                                              ['I', 'N', 'A', 'T', 'L'],
                                              ['N', 'L', 'Y', 'O', 'O']]
+        boggle_game.size = 5
 
     def test_valid_word(self):
         """Test if a word in the board will be validated"""

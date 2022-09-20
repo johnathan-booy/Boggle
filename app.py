@@ -18,7 +18,7 @@ def show_homepage():
 def show_boggle_board():
     """Build board, store it in session and show boggle game"""
 
-    size = request.args.get('size', 6, type=int)
+    size = request.args.get('size', boggle_game.size, type=int)
 
     if size > 10:
         return redirect('game?size=10')

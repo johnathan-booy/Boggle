@@ -9,7 +9,7 @@ class Boggle():
     def __init__(self):
 
         self.words = self.read_dict("words.txt")
-        self.size = 5
+        self.size = 7
 
         # Letters matched with their recurence in the english language
         self.letter_probs = {
