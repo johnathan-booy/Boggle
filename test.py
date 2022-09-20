@@ -16,7 +16,7 @@ class FlaskTests(TestCase):
         """Make sure information is in the session and the HTML is displayed"""
 
         with self.client:
-            response = self.client.get('/')
+            response = self.client.get('/game')
             self.assertIn(BOARD_KEY, session)
             self.assertIsNone(session.get('highscore'))
             self.assertIsNone(session.get('game-count'))

@@ -1,86 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}<title>Boggle Game</title>{% endblock %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/static/style.css">
+{% block content %}
 
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/7411db11d8.js" crossorigin="anonymous"></script>
+{% for msg in get_flashed_messages() %}
+<div id="notify" class="notify-good">{{msg}}</div>
+{% endfor %}
 
-
-    <title>Boggle</title>
-</head>
-
-<body>
-    <div class="vertical-center">
-        <a href="/" id="new-game" class="hidden">New Game</a>
-
-        <div id="statistics">
-            <div id="timer" class="statistic">
-                <div class="statistic-label">
-                    Timer
-                </div>
-                <div class="statistic-content">
-                    <span>60</span>
-                </div>
-            </div>
-            <div id="score" class="statistic">
-                <div class="statistic-label">
-                    Score
-                </div>
-                <div class="statistic-content">
-                    <span>0</span>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-            </div>
-            <div id="highscore" class="statistic">
-                <div class="statistic-label">
-                    Highscore
-                </div>
-                <div class="statistic-content">
-                    <span>{{session.get('highscore', 0)}}</span>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-            </div>
-            <div id="game-counter" class="statistic">
-                <div class="statistic-label">
-                    Game
-                </div>
-                <div class="statistic-content">
-                    <span>{{session.get('game_count', 1)}}</span>
-                </div>
-            </div>
+<div id="statistics">
+    <div id="highscore" class="statistic">
+        <div class="statistic-label">
+            Highscore
         </div>
-        <h1>Boggle</h1>
-        <form id="guess-form" method="post">
-            <input type="text" name="guess-input" id="guess-input" placeholder="Guess a word!">
-            <button type="submit">Guess!</button>
-        </form>
-        <table id="board">
-            {% for row in board %}
-            <tr>
-                {% for letter in row %}
-                <td>{{letter}}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </table>
-        <div id="notify" class="hidden"></div>
+        <div class="statistic-content">
+            <span>{{session.get('highscore', 0)}}</span>
+            <i class="fa-solid fa-star"></i>
+        </div>
     </div>
+    <div id="game-counter" class="statistic">
+        <div class="statistic-label">
+            Games
+        </div>
+        <div class="statistic-content">
+            <span>{{session.get('game_count', 1)}}</span>
+        </div>
+    </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.js"></script>
-    <script src="/static/boggle.js"></script>
-    <script>
-        let game = new BoggleGame();
-        $('#guess-input').focus()
-    </script>
-</body>
-
-</html>
+<h1>Boggle</h1>
+<form action="/game" id="start-form">
+    <label for="size">Board Size</label>
+    <input type="number" name="size" id="size" value="6" min="5" max="10">
+    <button type="submit">Start Game!</button>
+</form>
+{% endblock %}

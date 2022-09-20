@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, jsonify
+from flask import Flask, render_template, request, session, jsonify, redirect, flash
 from boggle import Boggle
 
 BOARD_KEY = "board"
@@ -8,12 +8,26 @@ app.config['SECRET_KEY'] = "oh-so-secret"
 
 
 @app.route('/')
-def show_boggle_board():
+def show_homepage():
     """Show boggle game"""
 
-    board = boggle_game.make_board()
+    return render_template('index.html')
+
+
+@app.route('/game')
+def show_boggle_board():
+    """Build board, store it in session and show boggle game"""
+
+    size = request.args.get('size', 6, type=int)
+
+    if size > 10:
+        return redirect('game?size=10')
+    elif size < 5:
+        return redirect('game?size=5')
+
+    board = boggle_game.make_board(size)
     session[BOARD_KEY] = board
-    return render_template('index.html', board=board)
+    return render_template('game.html', board=board)
 
 
 @app.route('/validate-word')
@@ -39,5 +53,6 @@ def post_score():
 
     if highscore < score:
         session['highscore'] = score
+        flash("Congratulations! You beat the highscore!")
 
-    return jsonify(brokeRecord=score > highscore, highscore=highscore, score=score)
+    return "/"

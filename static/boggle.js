@@ -11,7 +11,7 @@ class BoggleGame {
 
 		this.score = 0;
 		this.guessedWords = new Set();
-		this.timer = 8;
+		this.timer = 60;
 
 		this.timerInterval = setInterval(this.updateTimer.bind(this), 1000);
 		this.$guessForm.on("submit", this.handleSubmit.bind(this));
@@ -73,46 +73,18 @@ class BoggleGame {
 		this.$highscoreText.text(num);
 	}
 
-	updateTimer() {
+	async updateTimer() {
 		this.timer--;
 		if (this.timer <= 0) {
-			this.gameOver();
+			await this.gameOver();
 		}
 		this.$timerText.text(this.timer);
 	}
 
-	gameOver() {
+	async gameOver() {
 		clearInterval(this.timerInterval);
-		this.removeBoard();
-		this.processResult();
-		this.$newGame.removeClass("hidden");
-	}
-
-	removeBoard() {
-		this.$timer.remove();
-		this.$guessForm.remove();
-		this.$board.remove();
-	}
-
-	async processResult() {
 		const res = await axios.post("/post-score", { score: this.score });
-		this.displayResult(res.data);
-	}
-
-	displayResult(results) {
-		const { score, highscore, brokeRecord } = results;
-
-		console.log(highscore);
-		this.updateHighscore(highscore);
-
-		if (brokeRecord) {
-			this.showMessage(
-				"Congratulations, you got a new highscore!",
-				"notify-good"
-			);
-		} else {
-			this.showMessage("Nice Work!", "notify-good");
-		}
+		window.location.href = res.data;
 	}
 
 	showMessage(html, cls) {
